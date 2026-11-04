@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#123b32">
+<link rel="manifest" href="manifest.json">
+<title>মাল হিসাব</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Noto Sans Bengali",sans-serif;color:#17231f;background:#f3f7f5}
+*{box-sizing:border-box}body{margin:0}header{background:#123b32;color:white;padding:18px 16px}
+h1{font-size:23px;margin:0}header p{margin:5px 0 0;color:#d7eee6;font-size:13px}
+nav{display:flex;gap:7px;padding:10px;background:white;position:sticky;top:0;z-index:2;box-shadow:0 2px 8px #0001}
+nav button{flex:1;padding:11px 5px;border:0;border-radius:10px;background:#e8f0ec;color:#234438;font-weight:700}
+nav button.active{background:#176b50;color:white}
+main{padding:14px;max-width:720px;margin:auto}.panel{background:white;border-radius:14px;padding:15px;margin:0 0 13px;box-shadow:0 2px 10px #102b2010}
+h2{font-size:18px;margin:0 0 12px}.muted{color:#64756d;font-size:13px}
+label{display:block;font-size:13px;font-weight:700;margin:10px 0 5px}
+input,select{width:100%;padding:12px;border:1px solid #ccd9d2;border-radius:9px;font:inherit;background:white}
+button.primary{width:100%;padding:13px;border:0;border-radius:10px;background:#176b50;color:white;font-weight:700;font-size:15px;margin-top:12px}
+button.secondary{padding:9px 12px;border:0;border-radius:8px;background:#e8f0ec;color:#234438;font-weight:700}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.item{border-bottom:1px solid #edf1ee;padding:10px 0}.item:last-child{border:0}
+.item strong{display:block}.numbers{font-size:14px;color:#50645a;margin-top:4px}
+.pill{display:inline-block;background:#e5f4ec;color:#176b50;border-radius:20px;padding:4px 9px;font-size:12px;font-weight:700}
+.hidden{display:none!important}.danger{color:#b42318}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+footer{text-align:center;color:#7b8982;font-size:12px;padding:20px}
+</style>
+</head>
+<body>
+<header><h1>📦 মাল হিসাব</h1><p>মেমোর পিস যোগ করুন • বক্স ও অতিরিক্ত পিসের হিসাব দেখুন</p></header>
+<nav>
+<button class="active" data-tab="entry">মেমো এন্ট্রি</button>
+<button data-tab="summary">মোট হিসাব</button>
+<button data-tab="products">পণ্য তালিকা</button>
+</nav>
+<main>
+<section id="entry">
+<div class="panel">
+<h2>নতুন মেমো / পিস যোগ করুন</h2>
+<label>মেমো বা কাস্টমারের নাম (ঐচ্ছিক)</label><input id="memo" placeholder="যেমন: রহিম স্টোর / মেমো ১">
+<label>পণ্য নির্বাচন করুন</label><select id="product"></select>
+<label>পরিমাণ (পিস)</label><input id="qty" type="number" min="1" step="1" placeholder="যেমন: 25">
+<button class="primary" id="addEntry">হিসাবে যোগ করুন</button>
+<p class="muted">একই পণ্যের একাধিক মেমোর পিস যোগ করলে মোট হিসাব একসাথে দেখাবে।</p>
+</div>
+<div class="panel"><h2>সাম্প্রতিক এন্ট্রি</h2><div id="entries"></div><div class="actions"><button class="secondary" id="export">ব্যাকআপ ডাউনলোড</button><button class="secondary" id="importBtn">ব্যাকআপ ফিরিয়ে আনুন</button><input id="importFile" type="file" accept="application/json" class="hidden"></div></div>
+</section>
+<section id="summary" class="hidden">
+<div class="panel"><h2>সব পণ্যের মোট হিসাব</h2><div id="totals"></div></div>
+</section>
+<section id="products" class="hidden">
+<div class="panel"><h2>পণ্য তালিকা</h2><p class="muted">প্রতি বক্সে যত পিস থাকে তা লিখুন।</p><div id="productList"></div></div>
+<div class="panel"><h2>নতুন পণ্য যোগ করুন</h2>
+<label>পণ্যের নাম / সাইজ</label><input id="newName" placeholder="যেমন: 500gm">
+<label>এক বক্সে কত পিস?</label><input id="newPack" type="number" min="1" placeholder="যেমন: 12">
+<button class="primary" id="addProduct">পণ্য যোগ করুন</button>
+</div>
+</section>
+</main>
+<footer>তোমার তথ্য এই ফোনের ব্রাউজারে সেভ থাকবে। নিয়মিত ব্যাকআপ ডাউনলোড করে রাখো।</footer>
+<script>
+const defaults=[["1000gm",12],["200gm",30],["70gm",24],["400gm",12]];
+let products=JSON.parse(localStorage.getItem("mh_products")||"null")||defaults.map((x,i)=>({id:i+1,name:x[0],pack:x[1]}));
+let entries=JSON.parse(localStorage.getItem("mh_entries")||"[]");
+let nextId=Math.max(0,...products.map(p=>p.id))+1;
+const $=id=>document.getElementById(id);
+const save=()=>{localStorage.setItem("mh_products",JSON.stringify(products));localStorage.setItem("mh_entries",JSON.stringify(entries));};
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function render(){
+$("product").innerHTML=products.map(p=>`<option value="${p.id}">${esc(p.name)} — ${p.pack} পিস/বক্স</option>`).join("");
+$("entries").innerHTML=entries.length?entries.slice().reverse().map(e=>{let p=products.find(x=>x.id===e.pid);return `<div class="item"><strong>${esc(p?.name||"মুছে ফেলা পণ্য")} — ${e.qty} পিস</strong><div class="numbers">${esc(e.memo||"নাম দেওয়া হয়নি")} • ${new Date(e.date).toLocaleString("bn-BD")}</div></div>`}).join(""):'<p class="muted">এখনো কোনো এন্ট্রি নেই।</p>';
+$("totals").innerHTML=products.map(p=>{let q=entries.filter(e=>e.pid===p.id).reduce((a,e)=>a+e.qty,0),boxes=Math.floor(q/p.pack),extra=q%p.pack;return `<div class="item"><strong>${esc(p.name)} <span class="pill">${p.pack} পিস/বক্স</span></strong><div class="numbers">মোট: <b>${q} পিস</b> = <b>${boxes} বক্স</b> + <b>${extra} পিস</b></div></div>`}).join("");
+$("productList").innerHTML=products.map(p=>`<div class="item"><strong>${esc(p.name)}</strong><div class="row"><div><label>প্রতি বক্সে পিস</label><input type="number" min="1" value="${p.pack}" data-pack="${p.id}"></div><div class="actions" style="align-items:end"><button class="secondary danger" data-del="${p.id}">পণ্য মুছুন</button></div></div></div>`).join("");
+}
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("active",x===b));["entry","summary","products"].forEach(t=>$(t).classList.toggle("hidden",t!==b.dataset.tab));render();});
+$("addEntry").onclick=()=>{let pid=Number($("product").value),qty=Number($("qty").value);if(!pid||!Number.isInteger(qty)||qty<1){alert("পণ্য নির্বাচন করে সঠিক পিসের পরিমাণ লিখুন।");return;}entries.push({pid,qty,memo:$("memo").value.trim(),date:new Date().toISOString()});save();$("qty").value="";render();alert("হিসাবে যোগ হয়েছে।");};
+$("addProduct").onclick=()=>{let name=$("newName").value.trim(),pack=Number($("newPack").value);if(!name||!Number.isInteger(pack)||pack<1){alert("পণ্যের নাম ও বক্সপ্রতি পিস সঠিকভাবে লিখুন।");return;}products.push({id:nextId++,name,pack});$("newName").value="";$("newPack").value="";save();render();};
+$("productList").addEventListener("change",e=>{let id=Number(e.target.dataset.pack);if(!id)return;let v=Number(e.target.value);if(!Number.isInteger(v)||v<1){alert("সঠিক সংখ্যা লিখুন");render();return;}products.find(p=>p.id===id).pack=v;save();render();});
+$("productList").addEventListener("click",e=>{let id=Number(e.target.dataset.del);if(!id)return;if(!confirm("এই পণ্যটি মুছবেন? এর এন্ট্রিগুলোও মুছে যাবে।"))return;products=products.filter(p=>p.id!==id);entries=entries.filter(x=>x.pid!==id);save();render();});
+$("export").onclick=()=>{let blob=new Blob([JSON.stringify({products,entries},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="mal-hisab-backup.json";a.click();URL.revokeObjectURL(a.href);};
+$("importBtn").onclick=()=>$("importFile").click();
+$("importFile").onchange=async e=>{let f=e.target.files[0];if(!f)return;try{let d=JSON.parse(await f.text());if(!Array.isArray(d.products)||!Array.isArray(d.entries))throw 0;products=d.products;entries=d.entries;nextId=Math.max(0,...products.map(p=>p.id))+1;save();render();alert("ব্যাকআপ ফিরিয়ে আনা হয়েছে।");}catch{alert("এই ব্যাকআপ ফাইলটি সঠিক নয়।");}};
+render();
+if("serviceWorker" in navigator && location.protocol.startsWith("http")) navigator.serviceWorker.register("./sw.js").catch(()=>{});
+</script>
+</body></html>
