@@ -1,87 +1,78 @@
 <!doctype html>
-<html lang="bn">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#123b32">
-<link rel="manifest" href="manifest.json">
+<html lang="bn"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#123b32"><link rel="manifest" href="manifest.json">
 <title>মাল হিসাব</title>
 <style>
-:root{font-family:system-ui,-apple-system,"Noto Sans Bengali",sans-serif;color:#17231f;background:#f3f7f5}
-*{box-sizing:border-box}body{margin:0}header{background:#123b32;color:white;padding:18px 16px}
-h1{font-size:23px;margin:0}header p{margin:5px 0 0;color:#d7eee6;font-size:13px}
-nav{display:flex;gap:7px;padding:10px;background:white;position:sticky;top:0;z-index:2;box-shadow:0 2px 8px #0001}
-nav button{flex:1;padding:11px 5px;border:0;border-radius:10px;background:#e8f0ec;color:#234438;font-weight:700}
-nav button.active{background:#176b50;color:white}
-main{padding:14px;max-width:720px;margin:auto}.panel{background:white;border-radius:14px;padding:15px;margin:0 0 13px;box-shadow:0 2px 10px #102b2010}
-h2{font-size:18px;margin:0 0 12px}.muted{color:#64756d;font-size:13px}
-label{display:block;font-size:13px;font-weight:700;margin:10px 0 5px}
-input,select{width:100%;padding:12px;border:1px solid #ccd9d2;border-radius:9px;font:inherit;background:white}
-button.primary{width:100%;padding:13px;border:0;border-radius:10px;background:#176b50;color:white;font-weight:700;font-size:15px;margin-top:12px}
-button.secondary{padding:9px 12px;border:0;border-radius:8px;background:#e8f0ec;color:#234438;font-weight:700}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.item{border-bottom:1px solid #edf1ee;padding:10px 0}.item:last-child{border:0}
-.item strong{display:block}.numbers{font-size:14px;color:#50645a;margin-top:4px}
-.pill{display:inline-block;background:#e5f4ec;color:#176b50;border-radius:20px;padding:4px 9px;font-size:12px;font-weight:700}
-.hidden{display:none!important}.danger{color:#b42318}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-footer{text-align:center;color:#7b8982;font-size:12px;padding:20px}
-</style>
-</head>
-<body>
-<header><h1>📦 মাল হিসাব</h1><p>মেমোর পিস যোগ করুন • বক্স ও অতিরিক্ত পিসের হিসাব দেখুন</p></header>
-<nav>
-<button class="active" data-tab="entry">মেমো এন্ট্রি</button>
-<button data-tab="summary">মোট হিসাব</button>
-<button data-tab="products">পণ্য তালিকা</button>
-</nav>
+:root{font-family:system-ui,-apple-system,"Noto Sans Bengali",sans-serif;color:#17231f;background:#f3f7f5}*{box-sizing:border-box}body{margin:0}header{background:#123b32;color:white;padding:18px 16px}h1{font-size:23px;margin:0}header p{margin:5px 0 0;color:#d7eee6;font-size:13px}nav{display:flex;gap:6px;padding:9px;background:#fff;position:sticky;top:0;z-index:2;box-shadow:0 2px 8px #0001}nav button{flex:1;padding:11px 3px;border:0;border-radius:9px;background:#e8f0ec;color:#234438;font-weight:700}nav button.active{background:#176b50;color:white}main{padding:13px;max-width:760px;margin:auto}.panel{background:#fff;border-radius:14px;padding:14px;margin-bottom:12px;box-shadow:0 2px 10px #102b2010}h2{font-size:18px;margin:0 0 12px}.muted,small{color:#64756d;font-size:12px}label{display:block;font-size:13px;font-weight:700;margin:10px 0 5px}input,select{width:100%;padding:11px;border:1px solid #ccd9d2;border-radius:9px;font:inherit;background:#fff;color:#17231f}button.primary{width:100%;padding:12px;border:0;border-radius:10px;background:#176b50;color:#fff;font-weight:750;font-size:15px;margin-top:10px}button.secondary{padding:8px 11px;border:0;border-radius:8px;background:#e8f0ec;color:#234438;font-weight:700}.danger{color:#b42318}.row{display:grid;grid-template-columns:1fr 1fr;gap:9px}.item{border-bottom:1px solid #edf1ee;padding:10px 0}.item:last-child{border:0}.item strong{display:block}.numbers{font-size:13px;color:#50645a;margin-top:4px}.pill{display:inline-block;background:#e5f4ec;color:#176b50;border-radius:20px;padding:3px 8px;font-size:11px;font-weight:700}.hidden{display:none!important}.actions{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin-top:8px}.results{border:1px solid #dce7e1;border-radius:9px;overflow:hidden;margin-top:5px}.result{display:block;width:100%;text-align:left;padding:10px;background:white;border:0;border-bottom:1px solid #edf1ee}.result:last-child{border:0}.sizes{display:flex;flex-wrap:wrap;gap:7px}.sizebtn{border:1px solid #cbd9d1;background:#f7faf8;border-radius:9px;padding:9px 11px;color:#234438}.sizebtn.active{background:#dff2e8;border-color:#176b50}.calc{background:#e8f6ee;border:1px solid #c5e5d2;border-radius:10px;padding:11px;margin-top:10px}.calc b{color:#176b50}.qtyrow{display:grid;grid-template-columns:1fr 1fr;gap:9px}.checkrow{display:flex;align-items:center;gap:8px}.checkrow input{width:20px;height:20px;accent-color:#176b50}.badge{font-size:11px;background:#fff1d6;color:#815600;padding:4px 8px;border-radius:20px}.empty{color:#7a8981;padding:14px;text-align:center}.size-row{display:grid;grid-template-columns:1fr 1fr auto;gap:6px;margin:7px 0}.size-row input{min-width:0;padding:10px}.hint{font-size:11px;color:#687970;margin-top:6px}.memo-card{border:1px solid #e0e9e4;border-radius:10px;padding:10px;margin:9px 0}.memo-head{display:flex;justify-content:space-between;align-items:center;gap:8px}.mini{padding:7px 9px;border:0;border-radius:8px;background:#e8f0ec;color:#234438}.mini.red{background:#fae7e7;color:#a51f1f}footer{text-align:center;color:#7b8982;font-size:11px;padding:18px}
+</style></head><body>
+<header><h1>📦 মাল হিসাব</h1><p>মেমো তৈরি • কার্টন ও পিসের হিসাব • গাড়িতে তোলার চেকলিস্ট</p></header>
+<nav><button class="active" data-tab="entry">মেমো এন্ট্রি</button><button data-tab="summary">মোট হিসাব</button><button data-tab="products">পণ্য তালিকা</button></nav>
 <main>
 <section id="entry">
-<div class="panel">
-<h2>নতুন মেমো / পিস যোগ করুন</h2>
-<label>মেমো বা কাস্টমারের নাম (ঐচ্ছিক)</label><input id="memo" placeholder="যেমন: রহিম স্টোর / মেমো ১">
-<label>পণ্য নির্বাচন করুন</label><select id="product"></select>
-<label>পরিমাণ (পিস)</label><input id="qty" type="number" min="1" step="1" placeholder="যেমন: 25">
-<button class="primary" id="addEntry">হিসাবে যোগ করুন</button>
-<p class="muted">একই পণ্যের একাধিক মেমোর পিস যোগ করলে মোট হিসাব একসাথে দেখাবে।</p>
+<div class="panel"><h2>নতুন মেমো / মাল যোগ করুন</h2>
+<label>মেমো বা কাস্টমারের নাম</label><input id="memoName" placeholder="যেমন: রহিম স্টোর">
+<label>পণ্য সার্চ করুন</label><input id="search" placeholder="নামের প্রথম অক্ষর লিখুন..."><div id="searchResults" class="results hidden"></div>
+<label>নির্বাচিত পণ্য</label><div id="selectedProduct" class="muted">পণ্য নির্বাচন করুন</div>
+<label>সাইজ নির্বাচন</label><div id="sizeOptions" class="sizes"></div>
+<div id="packInfo" class="hint"></div>
+<label>পরিমাণ — কার্টন ও অতিরিক্ত পিস</label><div class="qtyrow"><div><small>কার্টন সংখ্যা</small><input id="cartons" type="number" min="0" step="1" value="0"></div><div><small>অতিরিক্ত পিস</small><input id="pieces" type="number" min="0" step="1" value="0"></div></div>
+<div class="calc">এই এন্ট্রির হিসাব: <b id="calcResult">০ কার্টন + ০ পিস</b><div class="hint" id="calcNote"></div></div>
+<button class="primary" id="addEntry">+ মেমোতে যোগ করুন</button>
 </div>
-<div class="panel"><h2>সাম্প্রতিক এন্ট্রি</h2><div id="entries"></div><div class="actions"><button class="secondary" id="export">ব্যাকআপ ডাউনলোড</button><button class="secondary" id="importBtn">ব্যাকআপ ফিরিয়ে আনুন</button><input id="importFile" type="file" accept="application/json" class="hidden"></div></div>
+<div class="panel"><h2>এই মেমোর পণ্য</h2><div id="draftList" class="empty">এখনো কোনো পণ্য যোগ হয়নি</div><button class="primary" id="saveMemo">মেমো সংরক্ষণ করুন</button></div>
+<div class="panel"><h2>ব্যাকআপ</h2><div class="actions"><button class="secondary" id="export">ব্যাকআপ ডাউনলোড</button><button class="secondary" id="importBtn">ব্যাকআপ ফিরিয়ে আনুন</button><input id="importFile" type="file" accept="application/json" class="hidden"></div><p class="hint">ফোনের ব্রাউজারের ডেটা মুছে গেলে ব্যাকআপ থেকে ফিরিয়ে আনতে পারবে।</p></div>
 </section>
 <section id="summary" class="hidden">
-<div class="panel"><h2>সব পণ্যের মোট হিসাব</h2><div id="totals"></div></div>
+<div class="panel"><h2>সর্বমোট হিসাব</h2><div class="row"><div><b id="memoCount">০</b><div class="muted">মোট মেমো</div></div><div><b id="lineCount">০</b><div class="muted">মোট পণ্য এন্ট্রি</div></div></div></div>
+<div class="panel"><h2>পণ্য ও সাইজ অনুযায়ী মোট</h2><div id="totals" class="empty">এখনো কোনো হিসাব নেই</div></div>
+<div class="panel"><h2>গাড়িতে মাল তোলার তালিকা</h2><p class="hint">যে পণ্য গাড়িতে উঠবে, তার পাশে টিক চিহ্ন দাও।</p><div id="loadingList" class="empty">এখনো কোনো মেমো নেই</div></div>
 </section>
 <section id="products" class="hidden">
-<div class="panel"><h2>পণ্য তালিকা</h2><p class="muted">প্রতি বক্সে যত পিস থাকে তা লিখুন।</p><div id="productList"></div></div>
-<div class="panel"><h2>নতুন পণ্য যোগ করুন</h2>
-<label>পণ্যের নাম / সাইজ</label><input id="newName" placeholder="যেমন: 500gm">
-<label>এক বক্সে কত পিস?</label><input id="newPack" type="number" min="1" placeholder="যেমন: 12">
-<button class="primary" id="addProduct">পণ্য যোগ করুন</button>
-</div>
-</section>
-</main>
-<footer>তোমার তথ্য এই ফোনের ব্রাউজারে সেভ থাকবে। নিয়মিত ব্যাকআপ ডাউনলোড করে রাখো।</footer>
+<div class="panel"><h2>পণ্য তালিকা</h2><input id="productFilter" placeholder="পণ্য খুঁজুন..."><div id="productList"></div></div>
+<div class="panel"><h2>+ নতুন পণ্য যোগ করুন</h2><label>পণ্যের নাম</label><input id="newProductName" placeholder="যেমন: জুস"><label>সাইজ (গ্রাম / কেজি) ও প্রতি কার্টনে পিস</label><div id="newSizes"></div><button class="secondary" id="addSize">+ আরেকটি সাইজ যোগ করুন</button><button class="primary" id="saveProduct">নতুন পণ্য সংরক্ষণ করুন</button><p class="hint">উদাহরণ: ২০০ গ্রাম — ১২ পিসে ১ কার্টন; ১ কেজি — ৬ পিসে ১ কার্টন।</p></div>
+</section></main><footer>তথ্য এই ফোনে সেভ থাকে। নিয়মিত ব্যাকআপ রাখো।</footer>
 <script>
-const defaults=[["1000gm",12],["200gm",30],["70gm",24],["400gm",12]];
-let products=JSON.parse(localStorage.getItem("mh_products")||"null")||defaults.map((x,i)=>({id:i+1,name:x[0],pack:x[1]}));
-let entries=JSON.parse(localStorage.getItem("mh_entries")||"[]");
-let nextId=Math.max(0,...products.map(p=>p.id))+1;
-const $=id=>document.getElementById(id);
-const save=()=>{localStorage.setItem("mh_products",JSON.stringify(products));localStorage.setItem("mh_entries",JSON.stringify(entries));};
-function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
-function render(){
-$("product").innerHTML=products.map(p=>`<option value="${p.id}">${esc(p.name)} — ${p.pack} পিস/বক্স</option>`).join("");
-$("entries").innerHTML=entries.length?entries.slice().reverse().map(e=>{let p=products.find(x=>x.id===e.pid);return `<div class="item"><strong>${esc(p?.name||"মুছে ফেলা পণ্য")} — ${e.qty} পিস</strong><div class="numbers">${esc(e.memo||"নাম দেওয়া হয়নি")} • ${new Date(e.date).toLocaleString("bn-BD")}</div></div>`}).join(""):'<p class="muted">এখনো কোনো এন্ট্রি নেই।</p>';
-$("totals").innerHTML=products.map(p=>{let q=entries.filter(e=>e.pid===p.id).reduce((a,e)=>a+e.qty,0),boxes=Math.floor(q/p.pack),extra=q%p.pack;return `<div class="item"><strong>${esc(p.name)} <span class="pill">${p.pack} পিস/বক্স</span></strong><div class="numbers">মোট: <b>${q} পিস</b> = <b>${boxes} বক্স</b> + <b>${extra} পিস</b></div></div>`}).join("");
-$("productList").innerHTML=products.map(p=>`<div class="item"><strong>${esc(p.name)}</strong><div class="row"><div><label>প্রতি বক্সে পিস</label><input type="number" min="1" value="${p.pack}" data-pack="${p.id}"></div><div class="actions" style="align-items:end"><button class="secondary danger" data-del="${p.id}">পণ্য মুছুন</button></div></div></div>`).join("");
+const $=id=>document.getElementById(id),bn=n=>Number(n).toLocaleString("bn-BD"),esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+let products=[],memos=[],draft=[],selectedPid=null,selectedSid=null,nextPid=1,nextSid=1,nextEntry=1;
+function loadData(){
+ let rawP=JSON.parse(localStorage.getItem("mh_products")||"null"),rawE=JSON.parse(localStorage.getItem("mh_entries")||"[]");
+ if(rawP&&Array.isArray(rawP)){
+  products=rawP.map(p=>({id:p.id,name:p.name,sizes:p.sizes||[{id:p.id,label:p.size||p.name,pack:Number(p.pack)||12}]}));
+  nextPid=Math.max(0,...products.map(p=>Number(p.id)||0))+1;
+ }else products=[{id:1,name:"1000gm",sizes:[{id:1,label:"1000gm",pack:12}]},{id:2,name:"200gm",sizes:[{id:2,label:"200gm",pack:30}]},{id:3,name:"70gm",sizes:[{id:3,label:"70gm",pack:24}]},{id:4,name:"400gm",sizes:[{id:4,label:"400gm",pack:12}]}];
+ let rawM=JSON.parse(localStorage.getItem("mh_memos")||"null");
+ if(Array.isArray(rawM))memos=rawM;
+ else if(Array.isArray(rawE)&&rawE.length){
+  const grouped={};rawE.forEach(e=>{let p=products.find(x=>x.id===e.pid);let key=e.memo||"নামবিহীন মেমো";(grouped[key]??=[]).push({id:nextEntry++,pid:e.pid,sid:p?.sizes[0]?.id,productName:p?.name||"পুরোনো পণ্য",sizeLabel:p?.sizes[0]?.label||p?.name||"সাইজ",pack:p?.sizes[0]?.pack||1,cartons:Math.floor((Number(e.qty)||0)/(p?.sizes[0]?.pack||1)),pieces:(Number(e.qty)||0)%(p?.sizes[0]?.pack||1),loaded:false,date:e.date||new Date().toISOString()})});
+  memos=Object.entries(grouped).map(([name,items],i)=>({id:i+1,name,items}));
+ }
+ nextEntry=Math.max(0,...memos.flatMap(m=>m.items.map(x=>Number(x.id)||0)))+1;
+ nextSid=Math.max(0,...products.flatMap(p=>p.sizes.map(s=>Number(s.id)||0)))+1;
+ saveData();
 }
-document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("active",x===b));["entry","summary","products"].forEach(t=>$(t).classList.toggle("hidden",t!==b.dataset.tab));render();});
-$("addEntry").onclick=()=>{let pid=Number($("product").value),qty=Number($("qty").value);if(!pid||!Number.isInteger(qty)||qty<1){alert("পণ্য নির্বাচন করে সঠিক পিসের পরিমাণ লিখুন।");return;}entries.push({pid,qty,memo:$("memo").value.trim(),date:new Date().toISOString()});save();$("qty").value="";render();alert("হিসাবে যোগ হয়েছে।");};
-$("addProduct").onclick=()=>{let name=$("newName").value.trim(),pack=Number($("newPack").value);if(!name||!Number.isInteger(pack)||pack<1){alert("পণ্যের নাম ও বক্সপ্রতি পিস সঠিকভাবে লিখুন।");return;}products.push({id:nextId++,name,pack});$("newName").value="";$("newPack").value="";save();render();};
-$("productList").addEventListener("change",e=>{let id=Number(e.target.dataset.pack);if(!id)return;let v=Number(e.target.value);if(!Number.isInteger(v)||v<1){alert("সঠিক সংখ্যা লিখুন");render();return;}products.find(p=>p.id===id).pack=v;save();render();});
-$("productList").addEventListener("click",e=>{let id=Number(e.target.dataset.del);if(!id)return;if(!confirm("এই পণ্যটি মুছবেন? এর এন্ট্রিগুলোও মুছে যাবে।"))return;products=products.filter(p=>p.id!==id);entries=entries.filter(x=>x.pid!==id);save();render();});
-$("export").onclick=()=>{let blob=new Blob([JSON.stringify({products,entries},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="mal-hisab-backup.json";a.click();URL.revokeObjectURL(a.href);};
-$("importBtn").onclick=()=>$("importFile").click();
-$("importFile").onchange=async e=>{let f=e.target.files[0];if(!f)return;try{let d=JSON.parse(await f.text());if(!Array.isArray(d.products)||!Array.isArray(d.entries))throw 0;products=d.products;entries=d.entries;nextId=Math.max(0,...products.map(p=>p.id))+1;save();render();alert("ব্যাকআপ ফিরিয়ে আনা হয়েছে।");}catch{alert("এই ব্যাকআপ ফাইলটি সঠিক নয়।");}};
-render();
-if("serviceWorker" in navigator && location.protocol.startsWith("http")) navigator.serviceWorker.register("./sw.js").catch(()=>{});
-</script>
-</body></html>
+function saveData(){localStorage.setItem("mh_products",JSON.stringify(products));localStorage.setItem("mh_memos",JSON.stringify(memos));localStorage.setItem("mh_entries",JSON.stringify(memos.flatMap(m=>m.items.map(x=>({pid:x.pid,qty:x.cartons*(products.find(p=>p.id===x.pid)?.sizes.find(s=>s.id===x.sid)?.pack||1)+x.pieces,memo:m.name,date:x.date})))));}
+function productById(id){return products.find(p=>String(p.id)===String(id))}
+function selectedSize(){return productById(selectedPid)?.sizes.find(s=>String(s.id)===String(selectedSid))}
+function chooseProduct(id){let p=productById(id);if(!p)return;selectedPid=p.id;selectedSid=p.sizes[0]?.id;$("selectedProduct").textContent=p.name;$("search").value=p.name;$("searchResults").classList.add("hidden");renderSizeOptions();calcEntry()}
+function renderSearch(){let q=$("search").value.trim().toLowerCase(),arr=products.filter(p=>p.name.toLowerCase().includes(q));$("searchResults").innerHTML=arr.map(p=>`<button class="result" data-pick="${p.id}"><b>${esc(p.name)}</b> <small>(${p.sizes.length} সাইজ)</small></button>`).join("")||'<div class="empty">কোনো পণ্য পাওয়া যায়নি</div>';$("searchResults").classList.remove("hidden");document.querySelectorAll("[data-pick]").forEach(b=>b.onclick=()=>chooseProduct(b.dataset.pick))}
+function renderSizeOptions(){let p=productById(selectedPid);$("sizeOptions").innerHTML=p?p.sizes.map(s=>`<button class="sizebtn ${String(s.id)===String(selectedSid)?"active":""}" data-size="${s.id}">${esc(s.label)}<br><small>${bn(s.pack)} পিস/কার্টন</small></button>`).join(""):"";document.querySelectorAll("[data-size]").forEach(b=>b.onclick=()=>{selectedSid=Number(b.dataset.size);renderSizeOptions();calcEntry()})}
+function calcEntry(){let s=selectedSize();if(!s)return;let c=Math.max(0,parseInt($("cartons").value)||0),p=Math.max(0,parseInt($("pieces").value)||0),carry=Math.floor(p/s.pack),left=p%s.pack;$("packInfo").textContent=`এই সাইজে ${bn(s.pack)} পিসে ১ কার্টন`;$("calcResult").textContent=`${bn(c+carry)} কার্টন + ${bn(left)} পিস`;$("calcNote").textContent=p>=s.pack?`অতিরিক্ত ${bn(p)} পিস থেকে ${bn(carry)} কার্টন হয়েছে।`:"";}
+function renderDraft(){$("draftList").className=draft.length?"":"empty";$("draftList").innerHTML=draft.length?draft.map((x,i)=>`<div class="item"><strong>${esc(x.productName)} — ${esc(x.sizeLabel)}</strong><div class="numbers">${bn(x.cartons)} কার্টন + ${bn(x.pieces)} পিস</div><button class="mini red" data-draft-del="${i}">বাদ দিন</button></div>`).join(""):"এখনো কোনো পণ্য যোগ হয়নি";document.querySelectorAll("[data-draft-del]").forEach(b=>b.onclick=()=>{draft.splice(+b.dataset.draftDel,1);renderDraft()})}
+function addCurrent(){let s=selectedSize(),p=productById(selectedPid);if(!s||!p)return alert("আগে পণ্য ও সাইজ নির্বাচন করো");let c=Math.max(0,parseInt($("cartons").value)||0),pcs=Math.max(0,parseInt($("pieces").value)||0);if(!c&&!pcs)return alert("কার্টন অথবা পিসের পরিমাণ লিখো");let carry=Math.floor(pcs/s.pack);draft.push({id:nextEntry++,pid:p.id,sid:s.id,productName:p.name,sizeLabel:s.label,pack:s.pack,cartons:c+carry,pieces:pcs%s.pack,loaded:false,date:new Date().toISOString()});renderDraft();$("cartons").value="0";$("pieces").value="0";calcEntry()}
+function saveMemo(){if(!draft.length)return alert("আগে মেমোতে পণ্য যোগ করো");memos.push({id:Date.now(),name:$("memoName").value.trim()||"নামবিহীন মেমো",items:draft.map(x=>({...x}))});draft=[];$("memoName").value="";renderDraft();saveData();renderAll();alert("মেমো সংরক্ষণ হয়েছে");}
+function aggregate(){let map={};memos.forEach(m=>m.items.forEach(x=>{let k=x.pid+"|"+x.sid;if(!map[k])map[k]={name:x.productName,size:x.sizeLabel,pack:x.pack,c:x.cartons,p:x.pieces};else{map[k].c+=x.cartons;map[k].p+=x.pieces}}));Object.values(map).forEach(x=>{x.c+=Math.floor(x.p/x.pack);x.p%=x.pack});return Object.values(map)}
+function renderAll(){let all=memos.flatMap(m=>m.items);$("memoCount").textContent=bn(memos.length);$("lineCount").textContent=bn(all.length);let sums=aggregate();$("totals").className=sums.length?"":"empty";$("totals").innerHTML=sums.length?sums.map(x=>`<div class="item"><strong>${esc(x.name)} — ${esc(x.size)}</strong><div class="numbers">${bn(x.pack)} পিসে ১ কার্টন · <b>${bn(x.c)} কার্টন + ${bn(x.p)} পিস</b></div></div>`).join(""):"এখনো কোনো হিসাব নেই";
+ $("loadingList").className=all.length?"":"empty";$("loadingList").innerHTML=all.length?memos.map((m,mi)=>`<div class="memo-card"><div class="memo-head"><strong>${esc(m.name)}</strong><button class="mini red" data-memo-del="${mi}">মেমো ডিলিট</button></div>${m.items.map((x,ii)=>`<div class="item checkrow"><input type="checkbox" data-loaded="${mi}-${ii}" ${x.loaded?"checked":""}><div style="flex:1"><strong>${esc(x.productName)} — ${esc(x.sizeLabel)}</strong><div class="numbers">${bn(x.cartons)} কার্টন + ${bn(x.pieces)} পিস</div></div><span class="badge">${x.loaded?"উঠেছে":"বাকি"}</span></div>`).join("")}</div>`).join(""):"এখনো কোনো মেমো নেই";
+ document.querySelectorAll("[data-loaded]").forEach(b=>b.onchange=()=>{let [mi,ii]=b.dataset.loaded.split("-").map(Number);memos[mi].items[ii].loaded=b.checked;saveData();renderAll()});document.querySelectorAll("[data-memo-del]").forEach(b=>b.onclick=()=>{if(confirm("এই মেমোটি ডিলিট করবে?")){memos.splice(+b.dataset.memoDel,1);saveData();renderAll()}});
+ renderProducts()}
+function renderProducts(){let q=($("productFilter").value||"").toLowerCase();let arr=products.filter(p=>p.name.toLowerCase().includes(q));$("productList").innerHTML=arr.map(p=>`<div class="item"><strong>${esc(p.name)}</strong><div class="numbers">${p.sizes.map(s=>`${esc(s.label)} · ${bn(s.pack)} পিস/কার্টন`).join(" | ")}</div><button class="mini red" data-prod-del="${p.id}">পণ্য ডিলিট</button></div>`).join("")||'<div class="empty">কোনো পণ্য নেই</div>';document.querySelectorAll("[data-prod-del]").forEach(b=>b.onclick=()=>{if(!confirm("পণ্যটি ডিলিট করবে? আগের মেমোর হিসাব থাকবে।"))return;products=products.filter(p=>String(p.id)!==b.dataset.prodDel);saveData();renderProducts();renderSearch()})}
+function addSizeRow(){let d=document.createElement("div");d.className="size-row";d.innerHTML='<input class="size-label" placeholder="যেমন ২০০ গ্রাম / ১ কেজি"><input class="size-pack" type="number" min="1" placeholder="পিসে ১ কার্টন"><button class="mini red" type="button">×</button>';d.querySelector("button").onclick=()=>{if($("newSizes").children.length>1)d.remove();else alert("অন্তত একটি সাইজ রাখতে হবে")};$("newSizes").appendChild(d)}
+function saveProduct(){let name=$("newProductName").value.trim(),rows=[...$("newSizes").children],sizes=rows.map(r=>({id:nextSid++,label:r.querySelector(".size-label").value.trim(),pack:Number(r.querySelector(".size-pack").value)}));if(!name)return alert("পণ্যের নাম লিখো");if(products.some(p=>p.name.toLowerCase()===name.toLowerCase()))return alert("এই নামে পণ্য আগে আছে");if(!sizes.length||sizes.some(s=>!s.label||!Number.isInteger(s.pack)||s.pack<1))return alert("প্রতিটি সাইজ ও প্রতি কার্টনে পিস সঠিকভাবে লিখো");products.push({id:nextPid++,name,sizes});$("newProductName").value="";$("newSizes").innerHTML="";addSizeRow();saveData();renderProducts();renderSearch();alert("নতুন পণ্য যোগ হয়েছে")}
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("active",x===b));["entry","summary","products"].forEach(t=>$(t).classList.toggle("hidden",t!==b.dataset.tab));renderAll()});
+$("search").oninput=renderSearch;$("cartons").oninput=calcEntry;$("pieces").oninput=calcEntry;$("addEntry").onclick=addCurrent;$("saveMemo").onclick=saveMemo;$("productFilter").oninput=renderProducts;$("addSize").onclick=addSizeRow;$("saveProduct").onclick=saveProduct;
+$("export").onclick=()=>{let blob=new Blob([JSON.stringify({products,memos},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="mal-hisab-backup.json";a.click();URL.revokeObjectURL(a.href)};
+$("importBtn").onclick=()=>$("importFile").click();$("importFile").onchange=async e=>{let f=e.target.files[0];if(!f)return;try{let d=JSON.parse(await f.text());if(!Array.isArray(d.products))throw 0;if(Array.isArray(d.memos)){products=d.products;memos=d.memos;}else if(Array.isArray(d.entries)){products=d.products.map(p=>({id:p.id,name:p.name,sizes:p.sizes||[{id:p.id,label:p.name,pack:Number(p.pack)||12}]}));let groups={};d.entries.forEach(x=>{let p=products.find(y=>y.id===x.pid),z=p?.sizes[0],pack=z?.pack||1,k=x.memo||"নামবিহীন মেমো";(groups[k]??=[]).push({id:nextEntry++,pid:x.pid,sid:z?.id,productName:p?.name||"পুরোনো পণ্য",sizeLabel:z?.label||p?.name||"সাইজ",pack,cartons:Math.floor((Number(x.qty)||0)/pack),pieces:(Number(x.qty)||0)%pack,loaded:false,date:x.date||new Date().toISOString()})});memos=Object.entries(groups).map(([name,items],i)=>({id:i+1,name,items}));}else throw 0;saveData();renderAll();alert("ব্যাকআপ ফিরিয়ে আনা হয়েছে")}catch{alert("ব্যাকআপ ফাইলটি সঠিক নয়")}};
+loadData();if(products.length)chooseProduct(products[0].id);addSizeRow();renderDraft();renderAll();
+if("serviceWorker"in navigator&&location.protocol.startsWith("http"))navigator.serviceWorker.register("./sw.js").catch(()=>{});
+</script></body></html>
